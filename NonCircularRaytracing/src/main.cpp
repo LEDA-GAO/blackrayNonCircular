@@ -1,9 +1,36 @@
 #include "def.h"
 #include <fstream>
 #include <iomanip>
+#include <vector>
+#include <sstream>
 
 // Define the global horizon variable
 HorizonOut<HorizonN> global_horizon;
+
+// Find rHorizon for exact match
+double get_rHorizon_for_spin(double spin, const std::vector<double>& spin_vals, const std::vector<double>& rHorizon_vals) {
+    for (size_t i = 0; i < spin_vals.size(); ++i) {
+        if (std::abs(spin_vals[i] - spin) < 1e-8) { // tolerance for floating point
+            return rHorizon_vals[i];
+        }
+    }
+    throw std::runtime_error("Spin value not found in spin_vals");
+}
+
+// Or: Find rHorizon for nearest spin
+double get_rHorizon_nearest(double spin, const std::vector<double>& spin_vals, const std::vector<double>& rHorizon_vals) {
+    if (spin_vals.empty()) throw std::runtime_error("spin_vals is empty");
+    size_t best = 0;
+    double min_diff = std::abs(spin_vals[0] - spin);
+    for (size_t i = 1; i < spin_vals.size(); ++i) {
+        double diff = std::abs(spin_vals[i] - spin);
+        if (diff < min_diff) {
+            min_diff = diff;
+            best = i;
+        }
+    }
+    return rHorizon_vals[best];
+}
 
 int main(int argc, char *argv[])
 {
@@ -19,6 +46,8 @@ int main(int argc, char *argv[])
     long double isco_initial_guess;
     long double pp, qq, fr;
     double r;
+    double h = 1e-7;
+    double horizon_limit;
     //long double traced[5];    
     int stop_integration_condition = 0;
     int photon_index = 0, index, i;
@@ -27,7 +56,7 @@ int main(int argc, char *argv[])
     const int max_prec = std::numeric_limits<long double>::max_digits10;
     char filename_o[128];
     char filename_o2[128];
-    std::ofstream outFile("data/isco_a_lNP.dat");
+    //std::ofstream outFile("data/isco_lNP_a_E_v2.dat");
 
 
     FILE *foutput;
@@ -50,6 +79,23 @@ int main(int argc, char *argv[])
     double dtheta = -Pi/2/(HorizonN-1); // Step size for theta in horizon calculation
     global_horizon = find_horizon<HorizonN>(dtheta);
 
+    // Read rHorizonLimit.dat into arrays
+    std::vector<double> spin_vals, rHorizon_vals;
+    std::ifstream rHorizon_file("data/rHorizonLimit.dat");
+    if (!rHorizon_file) {
+        std::cerr << "Error: Could not open data/rHorizonLimit.dat" << std::endl;
+        exit(1);
+    }
+    std::string line;
+    while (std::getline(rHorizon_file, line)) {
+        std::istringstream iss(line);
+        double spin_val, rHorizon_val;
+        if (iss >> spin_val >> rHorizon_val) {
+            spin_vals.push_back(spin_val);
+            rHorizon_vals.push_back(rHorizon_val);
+        }
+    }
+    rHorizon_file.close();
 
     /*
     std::ofstream horizon_file("data/horizon_points.dat");
@@ -94,7 +140,7 @@ int main(int argc, char *argv[])
     //cout<<"isco v1 "<<isco<<endl;
     //isco = find_isco_NC(2, 40, 1e-5, 1e-8, 1000, 1e-7);
     //cout<<"isco NC "<<isco<<endl;
-    double h = 1e-5; // Initial step size for the second derivative
+     // Initial step size for the second derivative
     auto findIsco = [&](double x) {
         return veffddr(x, h);
     };
@@ -112,10 +158,11 @@ int main(int argc, char *argv[])
         std::cerr << "Error opening isco_file.dat for writing." << std::endl;
     }
     */
-    
 
-    for(r = global_horizon.H[0]+0.1; r <= 100; r += 0.01) {
-        if(findIsco(r)*findIsco(r+0.01) < 0) {
+    
+    
+    for(r = 10 ; r >= global_horizon.H[0]+0.1; r -= 0.001) {
+        if(findIsco(r)*findIsco(r-0.001) < 0) {
             isco_initial_guess = r;
             break;
         }
@@ -124,33 +171,30 @@ int main(int argc, char *argv[])
 
     HighPrecisionRootFinder root_finder_isco(findIsco, tol, max_iter);
     isco = root_finder_isco.newton_raphson(isco_initial_guess);
-    //cout<<"isco NC2 "<<isco<<endl; 
-
+    
+   
     //Find ISCO for different spin and lNP
+    /*
     outFile << std::setprecision(max_prec);
-    for(spin=0.1;spin<1;spin+=0.01){
-        for(lNP=0.1;lNP<1;lNP+=0.01){
+    for(spin=0.6;spin<=0.99;spin+=0.01){
+        horizon_limit = get_rHorizon_for_spin(spin, spin_vals, rHorizon_vals);
+        for(lNP=1e-40;lNP<horizon_limit-0.0001;lNP+=0.01){
             global_horizon = find_horizon<HorizonN>(dtheta);
-            for(r = global_horizon.H[0]+0.01; r <= 100; r += 0.01) {
-                if(findIsco(r)*findIsco(r+0.01) < 0) {
+            for(r = 10 ; r >= global_horizon.H[0]+0.1; r -= 0.001) {
+                if(findIsco(r)*findIsco(r-0.001) < 0) {
                     isco_initial_guess = r;
                     break;
                 }
             }
-            /*
-            if(r>=100){   
-            cout<<"spin "<<spin<<" lNP "<<lNP<<" isco initial "<<isco_initial_guess<<endl;
-            cout<<findIsco(isco_initial_guess)<<" "<<findIsco(isco_initial_guess+0.01)<<endl;
-            cout<<"dot "<<findIsco(isco_initial_guess)*findIsco(isco_initial_guess+0.01)<<endl;
-            }*/
             HighPrecisionRootFinder root_finder_isco(findIsco, tol, max_iter);
             isco = root_finder_isco.newton_raphson(isco_initial_guess); 
                       
-            outFile << spin << " " << lNP  <<" "<<isco<<'\n';
+            outFile << lNP << " " << spin  <<" "<<isco<<'\n';
         }
     }
-    outFile.close();
     
+    outFile.close();
+    */
     xin = isco;
     xout = 500;
 
@@ -176,7 +220,7 @@ int main(int argc, char *argv[])
     
     /* ----- Set computational parameters ----- */
     robs_i = 1;
-    robs_f = 5;
+    robs_f = 500;
     //robs_f = 3;
 
    snprintf(filename_o2, sizeof(filename_o2), "data/photons_data_a%.05Lf_i_%.05Lf_beta_%.05Lf_lNP_%.05Lf.dat",

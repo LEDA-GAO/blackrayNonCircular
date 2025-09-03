@@ -21,6 +21,7 @@ void intersection(long double x_1, long double y_1, long double z_1, long double
 	c1 = (r1 - r2*pp)/r3;
 	
 	x_d[0] = 0.;
+	//What is the meaning of this x_d[1]? 
 	x_d[1] = sqrt(r1*r1 + r4*r4);
 	
 	if (x_d[1] > r1 && x_d[1] > r2) x_d[1] = 0.5*(r1 + r2);

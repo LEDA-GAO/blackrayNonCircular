@@ -65,12 +65,17 @@ void raytrace(long double xobs, long double yobs, long double iobs, long double 
   
   metric(r0, th0, met);
   
+  // the equations below reduced to kt0 expression in flat spacetime in spherical coordinate  
+  // derived from guvkukv=0. Is the factor correct?
   fact3 = sqrt(met[0][3]*met[0][3]*kphi0*kphi0-met[0][0]*(met[1][1]*kr0*kr0+met[2][2]*kth0*kth0+met[3][3]*kphi0*kphi0));
   
   kt0 = -(met[0][3]*kphi0+fact3)/met[0][0];
+
+  // b = Lz/E. In Kerr metric, Eq(13)(14) in note
   
   b = -(met[3][3]*kphi0+met[0][3]*kt0)/(met[0][0]*kt0+met[0][3]*kphi0);
-      
+  
+  //Why we want to divide it by fact3?  my understanding is to change lambda' = E lambda
   kr0 /= fact3;
   kth0 /= fact3;
 			
@@ -92,7 +97,7 @@ void raytrace(long double xobs, long double yobs, long double iobs, long double 
 			
 			
   const0 = kt0;
-  const1 = r02*s02*kphi0/kt0;
+  const1 = r02*s02*kphi0/kt0;//this seems to be k_phi/k_t but why r02*s02, why this is constant? 
 			
   stop_integration = 0;
 			

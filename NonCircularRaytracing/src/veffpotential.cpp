@@ -11,7 +11,6 @@ long double veffpotential(long double r)
     const1 = udt*(metNC[0][0]+metNC[0][3]*Omega);
     const2 = udt*(metNC[0][3]+metNC[3][3]*Omega);
 
-
-    return const2;
+    return const1;
 
 }
