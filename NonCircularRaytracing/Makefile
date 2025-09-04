@@ -1,9 +1,9 @@
-CXX = clang++
+CXX = g++
 #CXXFLAGS = -std=c++17 -Wall -O3 -Iinclude
-CXXFLAGS = -std=c++17 -Wall -g -O0 -Iinclude
+CXXFLAGS = -std=c++20 -Wall -g -O0 -Iinclude
 
 
-EXE = testRayTracing
+EXE = ironlineNcRt
 
 SRC = $(wildcard src/*.cpp)
 OBJ = $(SRC:.cpp=.o)
