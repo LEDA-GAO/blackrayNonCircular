@@ -8,7 +8,7 @@
 #include <algorithm>
 using namespace std;
 
-//#define imax 400
+#define imax 400
 
 const long double Pi = acos(-1.0);
 

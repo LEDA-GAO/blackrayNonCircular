@@ -95,7 +95,6 @@ int main(int argc, char *argv[])
     foutput_coord = fopen(filename_o2,"w");
 	
 	/* ----- assign photon position in the grid ----- */
-	
 	for (robs = robs_i; robs < robs_f; robs = robs*rstep) {
 		
 		for (i = 0; i <= imax - 1; i++) fphi[i] = 0;

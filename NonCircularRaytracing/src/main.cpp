@@ -234,6 +234,7 @@ int main(int argc, char *argv[])
     
     /* ----- Photon tracing loop ----- */
     for (robs = robs_i; robs < robs_f; robs = robs*rstep) {
+        for (i = 0; i <= imax - 1; i++) fphi[i] = 0;
         for (pobs = 0; pobs < 2*Pi - 0.5*pstep; pobs = pobs + pstep) {
         //for (pobs = 0; pobs < Pi/3; pobs = pobs + pstep) {
             xobs = robs*cos(pobs);
@@ -266,7 +267,8 @@ int main(int argc, char *argv[])
 						fphi[i] = fphi[i] + qq;
 						
 					}
-				}		
+				}	
+             					
             } 
         }
 
@@ -275,7 +277,7 @@ int main(int argc, char *argv[])
 		for (i = 0; i <= imax - 1; i++) {			
 			fr = robs*robs*fphi[i]*rstep2;		
 			N_obs[i] = N_obs[i] + fr;			
-		}			
+		}					
     }
 
 
@@ -294,7 +296,7 @@ int main(int argc, char *argv[])
 	}
 
 	for (i = 0; i <= imax - 1; i++) {
-		fprintf(foutput,"%Lf %.10Lf\n",E_obs[i],(N_obs[i]/N_tot));
+		fprintf(foutput,"%Lf %.10Lf\n",E_obs[i],N_obs[i]/N_tot);
 	}
 	
 	fclose(foutput);
