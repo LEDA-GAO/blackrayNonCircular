@@ -22,7 +22,7 @@ extern long double xobs, yobs;
 extern long double epsi3, a13, a22, a52;
 extern long double spin;
 extern long double iobs_deg;
-extern long double beta, lNP;
+extern long double betaNC, lNP;
 
 /*-----------------------------------------------------------*/
 struct VariablePair {
@@ -49,15 +49,11 @@ extern HorizonOut<HorizonN> global_horizon;
 
 //void raytrace(long double xobs, long double yobs, long double iobs, long double xin, long double disk_length_combined ,long double traces[], int& stop_integration);
 IntegrationOut raytracingNC(long double xobs, long double yobs, long double iobs, long double rin, long double disk_length_combined);
-std::array<long double, 5> diffeqs(long double b, std::array<long double, 7> vars);
-void redshift(long double r, long double ktkp, long double& gg);
 //void redshift_polish_doughnut(long double r, long double th, long double l ,long double ktkp, long double& gg);
-void intersection(long double x_1, long double y_1, long double z_1, long double x_2, long double y_2, long double z_2, long double x_d[]);
-void metric(long double z1, long double z2, long double mn[][4]);
-void metric_rderivatives(long double z1, long double z2, long double dmn[][4]);
 void find_isco(long double z1, long double& isco);
 VariablePair testdiffeqs(long double xobs, long double yobs, long double iobs);
 std::array<long double, 5> diffeqsNC(long double c1, long double c2, std::array<long double, 5> vars);
+void metric(long double r, long double th, long double mn[][4]);
 std::array<std::array<long double, 4>, 4> metricNC(long double r, long double th);
 std::array<std::array<long double, 4>, 4> metric_rderivativesNC(long double r, long double th);
 long double omegak(long double r);

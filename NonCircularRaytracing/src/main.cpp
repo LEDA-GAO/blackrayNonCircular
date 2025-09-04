@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     //We use unit c=G=M = 1 and set the mass of the BH scaled to be 1
     spin = atof(argv[1]);
     iobs_deg = atof(argv[2]);
-    beta = atof(argv[3]);
+    betaNC = atof(argv[3]);
     lNP = atof(argv[4]);
     rstep = atof(argv[5]);
     pstep = atof(argv[6]);
@@ -216,7 +216,7 @@ int main(int argc, char *argv[])
 	/*Iron line output file*/
 	//sprintf(filename_o,"iron_a%.03f.epsilon_r%.02f.epsilon_t%.02f.i%.02f.dat",spin,epsi3,iobs_deg);
     // sprintf(filename_o,"ironline_data/iron_a%.05Le.i%.02Le.e_%.02Le.a13_%.02Le.a22_%.02Le.a52_%.02Le.dat",spin,iobs_deg,epsi3,a13,a22,a52);
-    snprintf(filename_o, sizeof(filename_o), "ironline_data/iron_a_%.05Lf_i_%.05Lf_beta_%.05Lf_lNP_%.05Lf.dat",spin,iobs_deg,beta,lNP);
+    snprintf(filename_o, sizeof(filename_o), "ironline_data/iron_a_%.05Lf_i_%.05Lf_beta_%.05Lf_lNP_%.05Lf.dat",spin,iobs_deg,betaNC,lNP);
     
     /* ----- Set computational parameters ----- */
     robs_i = 1;
@@ -224,7 +224,7 @@ int main(int argc, char *argv[])
     //robs_f = 3;
 
    snprintf(filename_o2, sizeof(filename_o2), "data/photons_data_a%.05Lf_i_%.05Lf_beta_%.05Lf_lNP_%.05Lf.dat",
-             spin, iobs_deg, beta, lNP);
+             spin, iobs_deg, betaNC, lNP);
     
     foutput_coord = fopen(filename_o2,"w");
     if (foutput_coord == NULL) {

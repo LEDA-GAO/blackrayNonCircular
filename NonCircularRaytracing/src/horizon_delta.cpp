@@ -17,7 +17,7 @@ double horizon_delta(double r, double theta) {
     double delta;
 
     //this is the delta = r^2+a^2-2*r*m(r,theta)
-    delta = r2 + spin2 - 2.0*r/(1+pow((48*pow(lNP,4)/pow(r2+spin2*cos_theta2,3)),beta/2.0));
+    delta = r2 + spin2 - 2.0*r/(1+pow((48*pow(lNP,4)/pow(r2+spin2*cos_theta2,3)),betaNC/2.0));
     
     // Check for valid expression under square root
     /* if (delta >= 0) {
@@ -106,7 +106,6 @@ long double find_horizon(long double r1, long double r2, int max_iter, long doub
     return rH;
 }
 */
-
 
 
 

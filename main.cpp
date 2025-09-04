@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 	/* ----- Set computational parameters ----- */
 	
 	robs_i = 1;
-	robs_f = 500;
+	robs_f = 5;
 	
 	// rstep  = 1.008;
 	rstep2 = (rstep - 1)/rstep;

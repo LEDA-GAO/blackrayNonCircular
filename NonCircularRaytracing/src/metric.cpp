@@ -1,4 +1,3 @@
-
 #include "def.h"
 void metric(long double r, long double th, long double mn[][4])
 {
@@ -32,7 +31,6 @@ void metric(long double r, long double th, long double mn[][4])
     g_pp = (pow(t9, 0.2e1) * pow(t10, 0.2e1) - t2 * t5 * t12 * t8) * t6 * t8 * t11 * t14;
     g_tp = -(0.2e1 * t5 + t3 * (a13 * (a22 + t2) + ((r * a22 + a13) * r + t15) * r) + t15 * a13) * spin * t6 * t8 * t11;
     
-    //Is this g_tp the BL metric dtdp/2
     mn[0][0] = g_tt;
     mn[0][3] = g_tp;
     mn[1][1] = g_rr;

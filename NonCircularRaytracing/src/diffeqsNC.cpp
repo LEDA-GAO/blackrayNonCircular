@@ -27,10 +27,10 @@ std::array<long double, 5> diffeqsNC(long double c1, long double c2, std::array<
     t47 = pow(t33,2);
     t48 = t32*t47;
     t49 = t31 + t48;
-    t51 = beta/2.;
+    t51 = betaNC/2.;
     t50 = 1/t49;
     t52 = pow(3,t51);
-    t53 = pow(4,beta);
+    t53 = pow(4,betaNC);
     t54 = pow(lNP,4);
     t55 = pow(t49,-3);
     t56 = t54*t55;
@@ -61,7 +61,7 @@ std::array<long double, 5> diffeqsNC(long double c1, long double c2, std::array<
     t97 = 1/t96;
     t99 = pow(t60,-2);
     t98 = pow(t49,-2);
-    t116 = 2*beta;
+    t116 = 2*betaNC;
     t117 = 1 + t116;
     t118 = pow(2,t117);
     t119 = 1 + t51;
@@ -83,13 +83,13 @@ std::array<long double, 5> diffeqsNC(long double c1, long double c2, std::array<
     guur = -((2*t31*t32*t50*t74 + t50*t74*t86 + t50*t74*t89 - t31*t32*t50*t91 - t50*t89*t91)*t97);
     gurp = t50*(-(spin*t31*t74) - t112*t47*t74)*t97;
     guthth = t50;
-    dguudr = 2*t50*t61 - 4*t31*t61*t98 + beta*t118*t120*t122*t123*t31*t54*t99;
-    dgppdr = -2*r*t74*t82*t98 + t50*t74*(4*r*t75 - t32*t74*(t129 - 2*t61 - beta*t118*t120*t122*t130*t31*t54*t99));
-    dgupdr = -2*spin*t50*t61*t74 + 4*spin*t31*t61*t74*t98 - spin*beta*t118*t120*t122*t123*t31*t54*t74*t99;
+    dguudr = 2*t50*t61 - 4*t31*t61*t98 + betaNC*t118*t120*t122*t123*t31*t54*t99;
+    dgppdr = -2*r*t74*t82*t98 + t50*t74*(4*r*t75 - t32*t74*(t129 - 2*t61 - betaNC*t118*t120*t122*t130*t31*t54*t99));
+    dgupdr = -2*spin*t50*t61*t74 + 4*spin*t31*t61*t74*t98 - spin*betaNC*t118*t120*t122*t123*t31*t54*t74*t99;
     dgththdr = t129;
-    dguudth = 4*r*t32*t33*t61*t73*t98 - r*beta*t118*t120*t122*t123*t32*t33*t54*t73*t99;
-    dgppdth = 2*t33*t50*t73*t82 + 2*t147*t32*t33*t82*t98 + t50*t74*(-2*t32*t33*t73*t80 - r*beta*t118*t120*t122*t130*t147*t33*t54*t89*t99);
-    dgupdth = -4*r*spin*t33*t50*t61*t73 - 4*r*t112*t147*t33*t61*t98 + r*beta*t112*t118*t120*t122*t123*t147*t33*t54*t99;
+    dguudth = 4*r*t32*t33*t61*t73*t98 - r*betaNC*t118*t120*t122*t123*t32*t33*t54*t73*t99;
+    dgppdth = 2*t33*t50*t73*t82 + 2*t147*t32*t33*t82*t98 + t50*t74*(-2*t32*t33*t73*t80 - r*betaNC*t118*t120*t122*t130*t147*t33*t54*t89*t99);
+    dgupdth = -4*r*spin*t33*t50*t61*t73 - 4*r*t112*t147*t33*t61*t98 + r*betaNC*t112*t118*t120*t122*t123*t147*t33*t54*t99;
     dgrpdth = -2*spin*t33*t73;
     dgththdth = -2*t32*t33*t73;
 

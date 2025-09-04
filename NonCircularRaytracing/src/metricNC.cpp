@@ -11,10 +11,10 @@ std::array<std::array<long double, 4>, 4> metricNC(long double r, long double th
     t6 = pow(t5,2);
     t7 = t3*t6;
     t8 = t2 + t7;
-    t10 = beta/2.;
+    t10 = betaNC/2.;
     t9 = 1/t8;
     t11 = pow(3,t10);
-    t12 = pow(4,beta);
+    t12 = pow(4,betaNC);
     t13 = pow(lNP,4);
     t14 = pow(t8,-3);
     t15 = t13*t14;

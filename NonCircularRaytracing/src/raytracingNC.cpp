@@ -72,11 +72,10 @@ IntegrationOut raytracingNC(long double xobs, long double yobs, long double iobs
   kth0 = -(cos(iobs) - dobs*fact1/r02)/sqrt(r02-fact1*fact1);
   kphi0 = -xobs*sin(iobs)/(xobs2+fact2*fact2);
   
-  metric(r0, th0, met);
   
 
   // This photon's momentum is (-1,0,0,1). 
-  
+  metric(r0, th0, met);
   // the equations below reduced to kt0 expression in flat spacetime in spherical coordinate  
   // derived from guvkukv=0. 
   //This fact3 is E 
